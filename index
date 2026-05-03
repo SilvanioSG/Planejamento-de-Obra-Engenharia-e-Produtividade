@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Planejamento de Obra | Silvanio Gois</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            margin: 0;
+            padding: 24px 20px;
+            color: #1e2a3e;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* CABEÇALHO PERSONALIZADO */
+        .header {
+            background: rgb(39, 98, 141);
+            color: white;
+            padding: 20px 28px;
+            border-radius: 28px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .logo-img {
+            height: 70px;
+            width: auto;
+            background: white;
+            border-radius: 16px;
+            padding: 6px 12px;
+            object-fit: contain;
+        }
+        .title h1 {
+            margin: 0 0 5px;
+            font-weight: 700;
+            font-size: 1.7rem;
+            letter-spacing: -0.5px;
+        }
+        .title p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        .header-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+        }
+        .header-links a, .header-links span {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .header-links a:hover {
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+        .badge {
+            background: #ffb347;
+            color: #2c2c2c;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        /* BARRA DE CALIBRAÇÃO */
+        .calibration-bar {
+            background: #e9f0f5;
+            border-radius: 28px;
+            padding: 12px 20px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            border: 1px solid #cde0eb;
+        }
+        .calib-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .calib-item label {
+            font-weight: 600;
+            color: rgb(39, 98, 141);
+        }
+        select, input[type="number"] {
+            background: #fefefe;
+            border: 1px solid #bed3e3;
+            border-radius: 30px;
+            padding: 6px 12px;
+            font-weight: 500;
+        }
+
+        /* GRID e CARDS */
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+        }
+        .card {
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #e2edf2;
+        }
+        .card-header {
+            background: #ffffff;
+            padding: 18px 24px;
+            border-bottom: 2px solid #eef2f6;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: rgb(39, 98, 141);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card-body {
+            padding: 20px 24px;
+        }
+        .activities-panel {
+            flex: 2;
+            min-width: 550px;
+        }
+        .team-panel {
+            flex: 1.3;
+            min-width: 360px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+        }
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .activity-table th {
+            background: #f1f6fa;
+            padding: 12px 8px;
+            font-weight: 600;
+            color: #1e4a6b;
+            border-bottom: 1px solid #dce5ec;
+            text-align: center;
+        }
+        .activity-table td {
+            padding: 8px 6px;
+            border-bottom: 1px solid #e9edf2;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .quant-input {
+            width: 85px;
+            padding: 6px 8px;
+            border-radius: 14px;
+            border: 1px solid #bdd3e4;
+            text-align: center;
+        }
+        .select-check {
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+        .resource-item {
+            background: white;
+            border-radius: 20px;
+            padding: 8px 12px;
+            border: 1px solid #dee9f0;
+        }
+        .resource-label {
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: #2c698d;
+            display: block;
+        }
+        .resource-input {
+            width: 100%;
+            padding: 8px 8px;
+            margin-top: 6px;
+            border: 1px solid #cbdde9;
+            border-radius: 16px;
+            font-weight: 500;
+            text-align: center;
+        }
+        .calc-btn {
+            background: rgb(39, 98, 141);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            margin-top: 12px;
+        }
+        .calc-btn:hover {
+            background: #1e5a7a;
+            transform: scale(0.98);
+        }
+        .result-area {
+            background: #eef3fc;
+            border-radius: 24px;
+            padding: 18px;
+            margin-top: 24px;
+        }
+        .result-stat {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: rgb(39, 98, 141);
+        }
+        .duration-list {
+            margin-top: 16px;
+            max-height: 280px;
+            overflow-y: auto;
+            font-size: 0.75rem;
+        }
+        .add-custom {
+            margin-top: 32px;
+            background: #ffffffea;
+            border-top: 1px solid #dee6ed;
+            padding-top: 20px;
+        }
+        .flex-bt {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgb(39, 98, 141);
+            color: white;
+            border-radius: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-btn {
+            background: white;
+            color: rgb(39, 98, 141);
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        .footer-btn:hover {
+            background: #ffdd99;
+        }
+        hr {
+            margin: 18px 0;
+            border-color: #d4e2ec;
+        }
+        @media (max-width: 700px) {
+            .header { flex-direction: column; text-align: center; }
+            .calibration-bar { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Cabeçalho com imagem, título, links -->
+    <div class="header">
+        <div class="header-left">
+            <img src="Gestão_SG.png" alt="Silvanio Gois" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/80x60?text=SG';">
+            <div class="title">
+                <h1>– Silvanio Gois</h1>
+                <p>Planejamento de Obra | Engenharia e Produtividade</p>
+                <div class="badge"> Coeficientes calibrados (SINAPI/TCPO)</div>
+            </div>
+        </div>
+        <div class="header-links">
+            <a href="https://www.silvaniogois.com.br" target="_blank" rel="noopener">🌐 Site</a>
+            <a href="https://www.linkedin.com/in/silvanio-gois-6667b918b/" target="_blank" rel="noopener">🔗 LinkedIn</a>
+            <span>✉️ sg@silvaniogois.com.br</span>
+        </div>
+    </div>
+
+    <!-- BARRA DE CALIBRAÇÃO PROFISSIONAL (chapisco método + fator produtividade + info reboco) -->
+    <div class="calibration-bar">
+        <div class="calib-item">
+            <label>🧴 Chapisco:</label>
+            <select id="chapiscoMethod">
+                <option value="manual">Manual (0,20 h/m²) - Coerente TCPO/SINAPI</option>
+                <option value="mecanizado">Mecanizado (0,085 h/m²) - Projetor argamassa</option>
+            </select>
+        </div>
+        <div class="calib-item">
+            <label>⚙️ Eficiência da equipe:</label>
+            <input type="number" id="eficiencia" value="100" step="5" min="50" max="100" style="width:80px;"> <span>%</span>
+            <small>(menos % = mais horas)</small>
+        </div>
+        <div class="calib-item">
+            <label>📐 Reboco calibrado:</label>
+            <span style="background:#eef2fa; padding:4px 12px; border-radius:30px;">0,24 h/m² (massa fina - referência real)</span>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <!-- PAINEL ESQUERDO: ATIVIDADES -->
+        <div class="card activities-panel">
+            <div class="card-header">📋 Atividades da Obra (coeficientes calibrados)</div>
+            <div class="card-body">
+                <div class="table-wrapper">
+                    <table class="activity-table" id="activity-table">
+                        <thead>
+                            <tr><th>Sel</th><th>Atividade</th><th>Un.</th><th>Quant.</th><th>Índice (h/un)</th><th>Equipe Básica (coef.)</th></tr>
+                        </thead>
+                        <tbody id="activity-tbody"></tbody>
+                    </table>
+                </div>
+                <div class="add-custom">
+                    <div style="font-weight:600; margin-bottom: 10px;">➕ Nova Atividade (coeficientes gerais)</div>
+                    <div class="flex-bt">
+                        <input type="text" id="new-act-name" placeholder="Ex: Contrapiso" style="padding:8px; border-radius:20px; border:1px solid #ccc; flex:1;">
+                        <input type="text" id="new-act-unit" placeholder="unidade" style="width:90px; padding:8px;">
+                        <input type="number" id="new-act-quant" placeholder="Qtd" value="1" style="width:85px;">
+                        <input type="number" step="any" id="new-act-index" placeholder="h/un" value="0.5" style="width:90px;">
+                        <button id="add-custom-btn" class="calc-btn" style="width:auto; background:#4282a3;">+ Inserir</button>
+                    </div>
+                    <p style="font-size:0.7rem; margin-top:8px;">* Coeficientes de produtividade calibrados segundo referências SINAPI/TCPO 2025.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAINEL DIREITO: equipe + planejamento -->
+        <div class="card team-panel">
+            <div class="card-header">👷 Formação de Equipe & Duração</div>
+            <div class="card-body">
+                <div class="team-form">
+                    <div class="resource-grid" id="crew-inputs"></div>
+                    <div class="jornada-input" style="margin-bottom:8px;">
+                        <label>⏱️ Jornada diária (horas/dia): </label>
+                        <input type="number" id="jornada" value="8" step="0.5" style="width:110px; border-radius:20px;">
+                    </div>
+                    <button id="calcular-planejamento" class="calc-btn">📐 Calcular Planejamento (sequencial)</button>
+                    <div class="result-area" id="resultado-area">
+                        <div style="font-weight:700;">📌 Resumo da Obra (selecionadas):</div>
+                        <div id="resumo-global"></div>
+                        <hr>
+                        <div style="font-weight:600;">⏳ Duração estimada (sequencial / mesma equipe):</div>
+                        <div id="duracao-total" class="result-stat">--- dias</div>
+                        <div id="detalhe-atividade" class="duration-list"></div>
+                        <hr>
+                        <div id="recomendacao-equipe"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <span>© 2025 Silvanio Gois - Todos os direitos reservados</span>
+        <a href="https://www.silvaniogois.com.br" target="_blank" rel="noopener" class="footer-btn">🌐 Acessar Site</a>
+    </footer>
+</div>
+
+<script>
+    // ======================= BASE DE ATIVIDADES CALIBRADA (coerente com SINAPI/TCPO) =======================
+    // Ajustes realizados:
+    // - Chapisco (paredes int, ext, teto): inicialmente MANUAL (0,20 h/m²) – poderá ser alterado via seletor de método.
+    // - Reboco (paredes e teto): 0,24 h/m² (massa fina/referência real).
+    // - Demais índices mantidos da planilha, porém com valores já compatíveis.
+    // Obs.: preservamos também os coeficientes de composição (distribuição de mão de obra).
+    let atividadesBase = [
+        { nome:"Abrigo", unid:"m²", qtd:10, indice:6.7, coef:[0.06,1,0,0,0,0,0,1.12] },
+        { nome:"Lig. Água", unid:"un", qtd:1, indice:8, coef:[1,1,0,0,1,0,0.5,1.02] },
+        { nome:"Lig. Energia", unid:"un", qtd:1, indice:24, coef:[0,0,0,1,0,0,1,0] },
+        { nome:"Gabarito", unid:"m²", qtd:67.87, indice:0.79, coef:[0,1,0,0,0,0,0,1] },
+        { nome:"Broca de Concreto", unid:"m", qtd:48, indice:2, coef:[0,0,0,0,0,0,0,1] },
+        { nome:"Escavação de vala", unid:"m³", qtd:4.17, indice:4, coef:[0,0,0,0,0,0,0,1] },
+        { nome:"Fôrma p/ Fundação", unid:"m²", qtd:18.54, indice:1.83, coef:[0,1,0,0,0,0,0.25,0] },
+        { nome:"Armadura CA-50 (fund)", unid:"kg", qtd:88.96, indice:0.08, coef:[0,0,1,0,0,0,1.75,0] },
+        { nome:"Armadura CA-60 (fund)", unid:"kg", qtd:22.24, indice:0.08, coef:[0,0,1,0,0,0,1.75,0] },
+        { nome:"Concreto (fund)", unid:"m³", qtd:1.39, indice:1.5, coef:[1,0,0,0,0,0,0,1.33] },
+        { nome:"Reaterro e compactação", unid:"m³", qtd:2.43, indice:3.5, coef:[0,0,0,0,0,0,0,1] },
+        { nome:"Embasamento", unid:"m³", qtd:2.08, indice:7, coef:[1,0,0,0,0,0,0,1] },
+        { nome:"Impermeabilização", unid:"m²", qtd:53.3, indice:0.75, coef:[1,0,0,0,0,0,0,1.26] },
+        { nome:"Forma p/ Estruturas (sup)", unid:"m²", qtd:47.31, indice:0.91, coef:[0,1,0,0,0,0,0.25,0] },
+        { nome:"Armadura CA-50 (sup)", unid:"kg", qtd:133.18, indice:0.08, coef:[0,0,1,0,0,0,1.75,0] },
+        { nome:"Armadura CA-60 (sup)", unid:"kg", qtd:33.3, indice:0.08, coef:[0,0,1,0,0,0,1.75,0] },
+        { nome:"Concreto (sup)", unid:"m³", qtd:2.09, indice:1.5, coef:[1,0,0,0,0,0,0,1.33] },
+        { nome:"Laje pré-fabricada", unid:"m²", qtd:67.87, indice:0.73, coef:[0.6,1,0.21,0,0,0,0,2.58] },
+        { nome:"Alvenaria de Vedação", unid:"m²", qtd:153.33, indice:0.75, coef:[1,0,0,0,0,0,0,0.63] },
+        { nome:"Janela 1,00x1,50", unid:"un", qtd:2, indice:1.5, coef:[1,0,0,0,0,0,0,0.45] },
+        { nome:"Janela 1,00x1,20", unid:"un", qtd:2, indice:1.2, coef:[1,0,0,0,0,0,0,0.45] },
+        { nome:"Janela 0,60x0,60", unid:"un", qtd:1, indice:0.64, coef:[1,0,0,0,0,0,0,0.47] },
+        { nome:"Porta 0,70x2,10", unid:"un", qtd:1, indice:3.75, coef:[0.37,1,0,0,0,0,0,0.37] },
+        { nome:"Porta 0,80x2,10", unid:"un", qtd:4, indice:3.75, coef:[0.37,1,0,0,0,0,1,0.37] },
+        { nome:"Estrutura para telha", unid:"m²", qtd:71.76, indice:1.25, coef:[0,1,0,0,0,0,0,1] },
+        { nome:"Cobertura com telha", unid:"m²", qtd:71.67, indice:0.12, coef:[0,1,0,0,0,0,0,2.08] },
+        { nome:"Reservatório água", unid:"un", qtd:1, indice:7.7, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Tubo PVC Ø25mm", unid:"m", qtd:55.5, indice:0.378, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Tubo PVC Ø40mm", unid:"m", qtd:5.5, indice:0.4915, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Registro gaveta", unid:"un", qtd:2, indice:0.54, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Registro pressão", unid:"un", qtd:1, indice:0.61, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Válvula descarga", unid:"un", qtd:1, indice:2, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Tubo esgoto Ø40mm", unid:"m", qtd:4.1, indice:0.4915, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Tubo esgoto Ø50mm", unid:"m", qtd:14.8, indice:0.6, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Caixa gordura", unid:"un", qtd:1, indice:0.45, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Caixa inspeção", unid:"un", qtd:1, indice:0.6, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Calha chapa", unid:"m", qtd:15.3, indice:1.05, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Bacia sanitária", unid:"un", qtd:1, indice:3.3, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Lavatório louça", unid:"un", qtd:1, indice:1.5, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Pia cozinha", unid:"un", qtd:1, indice:4, coef:[0,0,0,0,1,0,1,0] },
+        { nome:"Entrada energia", unid:"un", qtd:1, indice:4.8, coef:[0,0,0,1,0,0,1,0] },
+        { nome:"Quadro distribuição", unid:"un", qtd:1, indice:1, coef:[0,0,0,1,0,0,1,0] },
+        { nome:"Disjuntores (conj)", unid:"un", qtd:5, indice:0.3, coef:[0,0,0,1,0,0,1,0] },
+        { nome:"Interruptores (conj)", unid:"un", qtd:5, indice:0.25, coef:[0,0,0,1,0,0,1,0] },
+        { nome:"Tomada universal", unid:"un", qtd:10, indice:0.21, coef:[0,0,0,1,0,0,1,0] },
+        { nome:"Eletroduto PVC 25mm", unid:"m", qtd:74.71, indice:0.15, coef:[0,0,0,1,0,0,1,0] },
+        { nome:"Fios 2,5mm", unid:"m", qtd:246.54, indice:0.11, coef:[0,0,0,1,0,0,1,0] },
+        // REVESTIMENTOS CALIBRADOS: CHAPISCO MANUAL = 0,20 | REBOCO = 0,24
+        { nome:"Chapisco paredes int", unid:"m²", qtd:168.8, indice:0.20, coef:[1,0,0,0,0,0,0,1] },
+        { nome:"Reboco paredes", unid:"m²", qtd:168.8, indice:0.24, coef:[1,0,0,0,0,0,0,1] },
+        { nome:"Azulejo", unid:"m²", qtd:45.6, indice:0.35, coef:[1,0,0,0,0,0,0,0.34] },
+        { nome:"Chapisco externo", unid:"m²", qtd:101.55, indice:0.20, coef:[1,0,0,0,0,0,0,1] },
+        { nome:"Reboco externo", unid:"m²", qtd:101.55, indice:0.24, coef:[1,0,0,0,0,0,0,1] },
+        { nome:"Contrapiso", unid:"m²", qtd:56.83, indice:0.53, coef:[1,0,0,0,0,0,0,0.49] },
+        { nome:"Piso cerâmico", unid:"m²", qtd:56.83, indice:0.4, coef:[1,0,0,0,0,0,0,0.38] },
+        { nome:"Rodapé", unid:"m", qtd:66.25, indice:0.3, coef:[1,0,0,0,0,0,0,0.67] },
+        { nome:"Chapisco teto", unid:"m²", qtd:56.83, indice:0.20, coef:[1,0,0,0,0,0,0,1] },
+        { nome:"Reboco teto", unid:"m²", qtd:56.83, indice:0.24, coef:[1,0,0,0,0,0,0,1] },
+        { nome:"Emassamento interno", unid:"m²", qtd:226.63, indice:0.3, coef:[0,0,0,0,0,1,0.67,0] },
+        { nome:"Pintura látex interna", unid:"m²", qtd:226.63, indice:0.4, coef:[0,0,0,0,0,1,0.87,0] },
+        { nome:"Pintura externa", unid:"m²", qtd:101.55, indice:0.4, coef:[0,0,0,0,0,1,0.87,0] },
+        { nome:"Limpeza geral", unid:"m²", qtd:67.87, indice:0.7, coef:[0,0,0,0,0,0,0,1] },
+        { nome:"Carga entulho", unid:"m³", qtd:6.34, indice:0.72, coef:[0,0,0,0,0,0,0,1] }
+    ];
+
+    // Referência para identificar atividades de chapisco (nome contém "Chapisco")
+    const isChapisco = (nome) => nome.toLowerCase().includes("chapisco");
+    
+    // Aplicar método de chapisco (manual ou mecanizado)
+    function aplicarMetodoChapisco(metodo) {
+        let novoIndice = (metodo === "manual") ? 0.20 : 0.085;
+        for (let act of atividades) {
+            if (isChapisco(act.nome)) {
+                act.indice = novoIndice;
+            }
+        }
+        renderTabela(); 
+    }
+
+    // Profissões
+    const profissoes = ["Pedreiro", "Carpinteiro", "Armador", "Eletricista", "Encanador", "Pintor", "Ajudante", "Servente"];
+    
+    // Estado global das atividades
+    let atividades = [...atividadesBase];
+    let selectedRows = new Array(atividades.length).fill(true);
+    
+    // Render tabela principal
+    function renderTabela() {
+        const tbody = document.getElementById("activity-tbody");
+        tbody.innerHTML = "";
+        atividades.forEach((act, idx) => {
+            const tr = document.createElement("tr");
+            const tdSel = document.createElement("td");
+            const chk = document.createElement("input");
+            chk.type = "checkbox";
+            chk.classList.add("select-check");
+            chk.checked = selectedRows[idx] !== false;
+            chk.addEventListener("change", (e) => { selectedRows[idx] = e.target.checked; });
+            tdSel.appendChild(chk);
+            tr.appendChild(tdSel);
+            const tdNome = document.createElement("td"); tdNome.innerText = act.nome; tdNome.style.textAlign="left"; tr.appendChild(tdNome);
+            const tdUn = document.createElement("td"); tdUn.innerText = act.unid; tr.appendChild(tdUn);
+            const tdQtd = document.createElement("td");
+            const inputQtd = document.createElement("input");
+            inputQtd.type = "number";
+            inputQtd.value = act.qtd;
+            inputQtd.step = "any";
+            inputQtd.classList.add("quant-input");
+            inputQtd.addEventListener("change", (e) => { act.qtd = parseFloat(e.target.value) || 0; });
+            tdQtd.appendChild(inputQtd);
+            tr.appendChild(tdQtd);
+            const tdIdx = document.createElement("td"); tdIdx.innerText = act.indice.toFixed(3); tr.appendChild(tdIdx);
+            const tdComp = document.createElement("td");
+            const compText = profissoes.map((p,i) => act.coef[i] > 0 ? `${p}:${act.coef[i].toFixed(2)}` : null).filter(v=>v).slice(0,3).join(", ");
+            tdComp.innerText = compText + (act.coef.filter(c=>c>0).length>3?"...":"");
+            tdComp.style.fontSize="0.7rem";
+            tr.appendChild(tdComp);
+            tbody.appendChild(tr);
+        });
+    }
+    
+    function renderEquipeInputs() {
+        const container = document.getElementById("crew-inputs");
+        container.innerHTML = "";
+        profissoes.forEach(prof => {
+            const div = document.createElement("div");
+            div.className = "resource-item";
+            let defaultVal = (prof === "Pedreiro" ? 1 : prof === "Carpinteiro" ? 1 : prof === "Servente" ? 2 : 1);
+            div.innerHTML = `<span class="resource-label">${prof}</span>
+                            <input type="number" id="crew_${prof}" class="resource-input" value="${defaultVal}" step="0.5" min="0">`;
+            container.appendChild(div);
+        });
+    }
+    
+    // Cálculo principal
+    function calcularPlanejamento() {
+        const crew = {};
+        profissoes.forEach(prof => {
+            let val = parseFloat(document.getElementById(`crew_${prof}`).value);
+            crew[prof] = (isNaN(val) || val<0) ? 0 : val;
+        });
+        const jornada = parseFloat(document.getElementById("jornada").value) || 8;
+        let eficiencia = parseFloat(document.getElementById("eficiencia").value);
+        if(isNaN(eficiencia) || eficiencia<=0) eficiencia = 100;
+        const fatorHora = 100 / eficiencia; // se eficiencia 80% -> fator 1.25 (mais horas)
+        
+        const atvsSelecionadas = atividades.filter((_, idx) => selectedRows[idx] === true);
+        if(atvsSelecionadas.length === 0) {
+            document.getElementById("resumo-global").innerHTML = "<span style='color:#b33'>⚠️ Selecione ao menos uma atividade.</span>";
+            document.getElementById("duracao-total").innerText = "---";
+            return;
+        }
+        
+        let totalHHGeral = {};
+        profissoes.forEach(p => totalHHGeral[p] = 0);
+        let atividadesDetalhe = [];
+        
+        for(let act of atvsSelecionadas) {
+            const somaCoef = act.coef.reduce((a,b)=>a+b,0);
+            let HHtotal = act.qtd * act.indice;
+            HHtotal = HHtotal * fatorHora; // aplica eficiência
+            if(HHtotal === 0) continue;
+            let profsHH = {};
+            for(let i=0; i<profissoes.length; i++) {
+                let peso = act.coef[i];
+                let HHprof = (somaCoef > 0) ? HHtotal * (peso / somaCoef) : (peso>0? HHtotal : 0);
+                profsHH[profissoes[i]] = HHprof;
+                totalHHGeral[profissoes[i]] += HHprof;
+            }
+            atividadesDetalhe.push({ nome: act.nome, HHtotal, profsHH, qtd:act.qtd, unid:act.unid });
+        }
+        
+        let duracaoSequencial = 0;
+        let detalhesHtml = "<ul>";
+        for(let act of atividadesDetalhe) {
+            let maxDias = 0;
+            for(let prof of profissoes) {
+                let hhProf = act.profsHH[prof] || 0;
+                let numTrab = crew[prof] || 0;
+                if(hhProf > 0 && numTrab > 0) {
+                    let dias = hhProf / (numTrab * jornada);
+                    if(dias > maxDias) maxDias = dias;
+                } else if(hhProf > 0 && numTrab === 0) {
+                    maxDias = Infinity;
+                }
+            }
+            if(!isFinite(maxDias)) {
+                detalhesHtml += `<li style="color:#c33">⚠️ ${act.nome}: sem mão de obra necessária → inviável</li>`;
+            } else {
+                detalhesHtml += `<li>📌 ${act.nome} (${act.qtd.toFixed(2)} ${act.unid}) → duração: <strong>${maxDias.toFixed(2)} dias</strong> (HH base: ${(act.HHtotal/fatorHora).toFixed(1)}h → c/ eficiência: ${act.HHtotal.toFixed(1)}h)</li>`;
+                duracaoSequencial += maxDias;
+            }
+        }
+        detalhesHtml += "</ul>";
+        
+        let resumoHTML = `<div style="font-size:0.85rem">📊 TOTAL HH por profissão (ajustado eficiência):<br/>`;
+        for(let prof of profissoes) {
+            if(totalHHGeral[prof]>0) resumoHTML += `▪️ ${prof}: ${totalHHGeral[prof].toFixed(1)} h-homem<br/>`;
+        }
+        const equipeAtual = profissoes.map(p => `${p}: ${crew[p]}`).join(" | ");
+        resumoHTML += `<div style="margin-top:6px">👥 Equipe atual: ${equipeAtual}<br>⚙️ Eficiência: ${eficiencia}% (fator ${fatorHora.toFixed(2)})</div>`;
+        
+        let recomendacao = "<div style='background:#e2eaf1; border-radius:16px; padding:10px; margin-top:8px'><strong>💡 Sugestão de quantitativo (base média)</strong><br/>";
+        let diasRef = duracaoSequencial > 0 ? duracaoSequencial : 20;
+        for(let prof of profissoes) {
+            let hh = totalHHGeral[prof];
+            if(hh > 0) {
+                let sugestao = Math.max(1, Math.ceil(hh / (diasRef * jornada) * 0.9));
+                recomendacao += `${prof}: ≈ ${sugestao} | `;
+            }
+        }
+        recomendacao += "</div>";
+        
+        document.getElementById("resumo-global").innerHTML = resumoHTML;
+        document.getElementById("duracao-total").innerHTML = duracaoSequencial.toFixed(2) + " dias (sequencial)";
+        document.getElementById("detalhe-atividade").innerHTML = detalhesHtml;
+        document.getElementById("recomendacao-equipe").innerHTML = recomendacao;
+    }
+    
+    function addCustomActivity() {
+        const nome = document.getElementById("new-act-name").value.trim();
+        const unid = document.getElementById("new-act-unit").value.trim();
+        let qtd = parseFloat(document.getElementById("new-act-quant").value);
+        let indice = parseFloat(document.getElementById("new-act-index").value);
+        if(!nome || !unid || isNaN(qtd) || isNaN(indice) || qtd<=0 || indice<=0) {
+            alert("Preencha nome, unidade, quantidade e índice válidos.");
+            return;
+        }
+        const coefPadrao = [0.4, 0, 0, 0, 0, 0, 0, 0.6];
+        const nova = { nome, unid, qtd, indice, coef: coefPadrao.slice() };
+        atividades.push(nova);
+        selectedRows.push(true);
+        renderTabela();
+        document.getElementById("new-act-name").value = "";
+        document.getElementById("new-act-unit").value = "";
+        document.getElementById("new-act-quant").value = "1";
+        document.getElementById("new-act-index").value = "0.5";
+    }
+    
+    // Eventos de calibração
+    function initCalibracao() {
+        const chapiscoSelect = document.getElementById("chapiscoMethod");
+        chapiscoSelect.addEventListener("change", () => aplicarMetodoChapisco(chapiscoSelect.value));
+        aplicarMetodoChapisco(chapiscoSelect.value); // aplica o padrão (manual)
+        document.getElementById("calcular-planejamento").addEventListener("click", calcularPlanejamento);
+        document.getElementById("add-custom-btn").addEventListener("click", addCustomActivity);
+    }
+    
+    renderTabela();
+    renderEquipeInputs();
+    initCalibracao();
+</script>
+</body>
+</html>
