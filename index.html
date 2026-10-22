@@ -308,7 +308,7 @@
     <!-- Cabeçalho com imagem, título, links -->
     <div class="header">
         <div class="header-left">
-            <img src="Gestão_SG.png" alt="Silvanio Gois" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/80x60?text=SG';">
+            <img src="SG_Site.png" alt="Silvanio Gois" class="logo-img" onerror="this.onerror=null; this.src='https://placehold.co/80x60?text=SG';">
             <div class="title">
                 <h1>– Silvanio Gois</h1>
                 <p>Planejamento de Obra | Engenharia e Produtividade</p>
@@ -325,19 +325,19 @@
     <!-- BARRA DE CALIBRAÇÃO PROFISSIONAL (chapisco método + fator produtividade + info reboco) -->
     <div class="calibration-bar">
         <div class="calib-item">
-            <label>🧴 Chapisco:</label>
+            <label> Chapisco:</label>
             <select id="chapiscoMethod">
                 <option value="manual">Manual (0,20 h/m²) - Coerente TCPO/SINAPI</option>
                 <option value="mecanizado">Mecanizado (0,085 h/m²) - Projetor argamassa</option>
             </select>
         </div>
         <div class="calib-item">
-            <label>⚙️ Eficiência da equipe:</label>
+            <label> Eficiência da equipe:</label>
             <input type="number" id="eficiencia" value="100" step="5" min="50" max="100" style="width:80px;"> <span>%</span>
             <small>(menos % = mais horas)</small>
         </div>
         <div class="calib-item">
-            <label>📐 Reboco calibrado:</label>
+            <label> Reboco calibrado:</label>
             <span style="background:#eef2fa; padding:4px 12px; border-radius:30px;">0,24 h/m² (massa fina - referência real)</span>
         </div>
     </div>
@@ -345,7 +345,7 @@
     <div class="dashboard">
         <!-- PAINEL ESQUERDO: ATIVIDADES -->
         <div class="card activities-panel">
-            <div class="card-header">📋 Atividades da Obra (coeficientes calibrados)</div>
+            <div class="card-header"> Atividades da Obra (coeficientes calibrados)</div>
             <div class="card-body">
                 <div class="table-wrapper">
                     <table class="activity-table" id="activity-table">
@@ -371,20 +371,20 @@
 
         <!-- PAINEL DIREITO: equipe + planejamento -->
         <div class="card team-panel">
-            <div class="card-header">👷 Formação de Equipe & Duração</div>
+            <div class="card-header"> Formação de Equipe & Duração</div>
             <div class="card-body">
                 <div class="team-form">
                     <div class="resource-grid" id="crew-inputs"></div>
                     <div class="jornada-input" style="margin-bottom:8px;">
-                        <label>⏱️ Jornada diária (horas/dia): </label>
+                        <label> Jornada diária (horas/dia): </label>
                         <input type="number" id="jornada" value="8" step="0.5" style="width:110px; border-radius:20px;">
                     </div>
                     <button id="calcular-planejamento" class="calc-btn">📐 Calcular Planejamento (sequencial)</button>
                     <div class="result-area" id="resultado-area">
-                        <div style="font-weight:700;">📌 Resumo da Obra (selecionadas):</div>
+                        <div style="font-weight:700;"> Resumo da Obra (selecionadas):</div>
                         <div id="resumo-global"></div>
                         <hr>
-                        <div style="font-weight:600;">⏳ Duração estimada (sequencial / mesma equipe):</div>
+                        <div style="font-weight:600;"> Duração estimada (sequencial / mesma equipe):</div>
                         <div id="duracao-total" class="result-stat">--- dias</div>
                         <div id="detalhe-atividade" class="duration-list"></div>
                         <hr>
